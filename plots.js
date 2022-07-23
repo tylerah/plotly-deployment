@@ -1,37 +1,45 @@
-// Sort the data array using the greekSearchResults value
-data.sort(function(a, b) {
-  return parseFloat(b.greekSearchResults) - parseFloat(a.greekSearchResults);
-});
+// create fuction to populate drop-down menu
+function init() {
+    var selector = d3.select("#selDataset");
+  
+    d3.json("samples.json").then((data) => {
+      console.log(data);
+      var sampleNames = data.names;
+      sampleNames.forEach((sample) => {
+        selector
+          .append("option")
+          .text(sample)
+          .property("value", sample);
+      });
+  })}
+  
+// call the function created above
+init();
 
-// Slice the first 10 objects for plotting
-data = data.slice(0, 10);
+// create function optionChanged
+function optionChanged(newSample) {
+//  console.log(newSample);
+    buildMetadata(newSample);
+//  buildCharts(newSample);
+}
 
-// Reverse the array due to Plotly's defaults
-data = data.reverse();
+// create function buildMetadata
+function buildMetadata(sample) {
+    // call the json data
+    d3.json("samples.json").then((data) => {
+        // set the dictionary "metadata" equal to the variable metadata
+        var metadata = data.metadata;
+        // create resultArray to store the filtered sample from the metadata
+        var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+        var result = resultArray[0];
+        // use d3 to select the panel with id of '#sample-metadata'
+        var PANEL = d3.select("#sample-metadata");
 
-// Trace1 for the Greek Data
-var trace1 = {
-  x: data.map(row => row.greekSearchResults),
-  y: data.map(row => row.greekName),
-  text: data.map(row => row.greekName),
-  name: "Greek",
-  type: "bar",
-  orientation: "h"
+        // use '.html' to clear any existing metadata
+        PANEL.html("");
+        // use forEach to display all of the key, value pairs for the selected sample
+        Object.entries(result).forEach(([key, value]) => {
+            PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
+        });
+    });
 };
-
-// data
-var data = [trace1];
-
-// Apply the group bar mode to the layout
-var layout = {
-  title: "Greek gods search results",
-  margin: {
-    l: 100,
-    r: 100,
-    t: 100,
-    b: 100
-  }
-};
-
-// Render the plot to the div tag with id "plot"
-Plotly.newPlot("plot", data, layout);
