@@ -1,0 +1,45 @@
+.jumbotron {
+    background-image: url("images/petridish2.jpg");
+    background-size: 100% 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    color: white
+  }
+
+p {
+    color: white;
+    padding: 7px;
+}
+
+#intro{
+    background-color: white;
+    color: black;
+}
+
+body {
+    background-color: #236283;
+}
+
+.panel-selector {
+    border-color:#B35729;
+    border-width: 2px;
+    background-color: #B35729;
+    color: white
+
+}
+
+.panel-selector>.panel-heading {
+    border-color:#B35729;
+    border-width: 2px;
+    background-color: #B35729;
+    color: white;
+    font-weight: 400;
+    font-size: 50px;
+}
+
+.panel-selector>.panel-body {
+    border-top-color: #B35729;
+    border-radius: 2px;
+    background-color: white;
+    color: black;
+}

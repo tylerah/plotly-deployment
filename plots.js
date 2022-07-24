@@ -11,7 +11,14 @@ function init() {
           .text(sample)
           .property("value", sample);
       });
-  })}
+
+      // use the first sample from the list to build the initial plots
+      var firstSample = sampleNames[0];
+      buildCharts(firstSample);
+      buildMetadata(firstSample);
+  });
+
+}
   
 // call the function created above
 init();
@@ -74,16 +81,24 @@ function buildCharts(sample) {
             y: yticks,
             text: otu_labels.slice(0, 10).reverse(),
             type: "bar",
-            orientation: "h"
+            orientation: "h",
+            marker: {
+                color: "rgb(179, 87, 41)",
+                line: {
+                    color: "rgb(94, 46, 22)",
+                    width: 1.5
+                }
+            }
         }];
         // create the layout for the bar chart. 
         var barLayout = {
             title: "<b>Top 10 Bacteria Cultures Found</b>",
+            xaxis: {title: "Total Cultures"},
             margin: {
-                l: 100,
-                r: 100,
-                t: 40,
-                b:100
+                l: 75,
+                r: 35,
+                t: 50,
+                b:35
             }
         };
 
@@ -137,8 +152,8 @@ function buildCharts(sample) {
           
         // create the layout for the gauge chart.
         var gaugeLayout = {
-            width: 500,
-            height: 460,
+            width: 450,
+            height: 400,
             margin: {t: 0, b: 0}
         };
     
